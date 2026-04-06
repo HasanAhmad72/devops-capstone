@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="DevOps Capstone Project — A single-page portfolio app deployed with Git, GitHub, Docker, and Kubernetes." />
+  <title>DevOps Capstone | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== NAV ===== -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <div class="logo">
+        <span class="logo-bracket">&lt;</span>DevOps<span class="logo-accent">App</span><span class="logo-bracket">/&gt;</span>
+      </div>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#home" id="nav-home">Home</a></li>
+        <li><a href="#about" id="nav-about">About</a></li>
+        <li><a href="#stack" id="nav-stack">Tech Stack</a></li>
+        <li><a href="#pipeline" id="nav-pipeline">Pipeline</a></li>
+        <li><a href="#contact" id="nav-contact">Contact</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section id="home" class="hero">
+    <div class="hero-bg-glow glow-1"></div>
+    <div class="hero-bg-glow glow-2"></div>
+    <div class="hero-bg-glow glow-3"></div>
+
+    <div class="hero-content">
+      <div class="badge" id="badge-live">
+        <span class="badge-dot"></span>
+        Running on Kubernetes
+      </div>
+      <h1 class="hero-title">
+        Deploy Apps<br/>
+        <span class="gradient-text">Like a Pro</span>
+      </h1>
+      <p class="hero-subtitle">
+        A capstone project demonstrating end-to-end DevOps — version control,
+        containerization, and orchestration in one elegant workflow.
+      </p>
+      <div class="hero-cta">
+        <a href="#pipeline" class="btn btn-primary" id="btn-pipeline">View Pipeline</a>
+        <a href="#stack" class="btn btn-ghost" id="btn-stack">Tech Stack</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num" data-target="3">0</span>
+          <span class="stat-label">K8s Replicas</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num" data-target="4">0</span>
+          <span class="stat-label">DevOps Tools</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num" data-target="100">0</span>
+          <span class="stat-label">% Containerized</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="terminal" id="terminal-box">
+        <div class="terminal-header">
+          <span class="t-dot t-red"></span>
+          <span class="t-dot t-yellow"></span>
+          <span class="t-dot t-green"></span>
+          <span class="t-title">bash — capstone</span>
+        </div>
+        <div class="terminal-body" id="terminal-body">
+          <div class="t-line"><span class="t-prompt">$</span> git add .</div>
+          <div class="t-line"><span class="t-prompt">$</span> git commit -m "feat: add portfolio"</div>
+          <div class="t-line t-output">[main 3f2c1a] feat: add portfolio</div>
+          <div class="t-line"><span class="t-prompt">$</span> docker build -t devops-app:v1 .</div>
+          <div class="t-line t-output">Successfully built 8b4e2f1a</div>
+          <div class="t-line"><span class="t-prompt">$</span> kubectl apply -f k8s/</div>
+          <div class="t-line t-output success">deployment.apps/capstone-deploy created</div>
+          <div class="t-line t-output success">service/capstone-service created</div>
+          <div class="t-line"><span class="t-prompt">$</span> kubectl get pods</div>
+          <div class="t-line t-output success">capstone-deploy-xxx   1/1   Running   ✓</div>
+          <div class="t-line"><span class="t-prompt">$</span><span class="cursor">▋</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="about" class="about">
+    <div class="container">
+      <div class="section-label">About the Project</div>
+      <h2 class="section-title">What is this <span class="gradient-text">Capstone</span>?</h2>
+      <p class="section-desc">
+        This project demonstrates a complete DevOps workflow — from writing code to shipping it
+        to production using industry-standard tools. Every step mirrors what real engineering
+        teams do at scale.
+      </p>
+
+      <div class="cards-grid">
+        <div class="card" id="card-git">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="3"/><circle cx="5" cy="5" r="2"/><circle cx="19" cy="5" r="2"/>
+              <circle cx="5" cy="19" r="2"/>
+              <path d="M7 5h10M5 7v10M12 9v6"/>
+            </svg>
+          </div>
+          <h3>Git</h3>
+          <p>Track every change with commits. Branch, merge, and maintain a clean history of your entire codebase.</p>
+        </div>
+
+        <div class="card" id="card-github">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+          </div>
+          <h3>GitHub</h3>
+          <p>Cloud-hosted repository for collaboration, backup, and visibility. Your code, accessible anywhere.</p>
+        </div>
+
+        <div class="card" id="card-docker">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="2" y="8" width="4" height="3" rx="0.5"/>
+              <rect x="7" y="8" width="4" height="3" rx="0.5"/>
+              <rect x="12" y="8" width="4" height="3" rx="0.5"/>
+              <rect x="7" y="4" width="4" height="3" rx="0.5"/>
+              <path d="M18 11c1 0 4 .5 4 3.5 0 0-1 1.5-4 1.5H5c-2 0-3-1-3-3V11"/>
+              <path d="M18 11c0-1.5 1-2 2-2"/>
+            </svg>
+          </div>
+          <h3>Docker</h3>
+          <p>Package the app and all its dependencies into a portable container. Works on any machine, every time.</p>
+        </div>
+
+        <div class="card" id="card-k8s">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <polygon points="12,2 22,8 22,16 12,22 2,16 2,8"/>
+              <circle cx="12" cy="12" r="3"/>
+              <line x1="12" y1="2" x2="12" y2="9"/>
+              <line x1="12" y1="15" x2="12" y2="22"/>
+              <line x1="22" y1="8" x2="15.5" y2="11.5"/>
+              <line x1="8.5" y1="12.5" x2="2" y2="16"/>
+              <line x1="22" y1="16" x2="15.5" y2="12.5"/>
+              <line x1="8.5" y1="11.5" x2="2" y2="8"/>
+            </svg>
+          </div>
+          <h3>Kubernetes</h3>
+          <p>Orchestrate containers at scale. Handle replicas, rolling updates, self-healing, and load balancing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TECH STACK ===== -->
+  <section id="stack" class="stack-section">
+    <div class="container">
+      <div class="section-label">Technologies Used</div>
+      <h2 class="section-title">The Full <span class="gradient-text">Tech Stack</span></h2>
+
+      <div class="stack-grid">
+        <div class="stack-item" id="stack-html">
+          <div class="stack-badge html">HTML5</div>
+          <span>Structure</span>
+        </div>
+        <div class="stack-item" id="stack-css">
+          <div class="stack-badge css">CSS3</div>
+          <span>Styling</span>
+        </div>
+        <div class="stack-item" id="stack-js">
+          <div class="stack-badge js">JS</div>
+          <span>Interactivity</span>
+        </div>
+        <div class="stack-item" id="stack-nginx">
+          <div class="stack-badge nginx">Nginx</div>
+          <span>Web Server</span>
+        </div>
+        <div class="stack-item" id="stack-docker2">
+          <div class="stack-badge docker">Docker</div>
+          <span>Container</span>
+        </div>
+        <div class="stack-item" id="stack-k8s2">
+          <div class="stack-badge k8s">K8s</div>
+          <span>Orchestration</span>
+        </div>
+        <div class="stack-item" id="stack-git2">
+          <div class="stack-badge git">Git</div>
+          <span>Version Control</span>
+        </div>
+        <div class="stack-item" id="stack-github2">
+          <div class="stack-badge github">GitHub</div>
+          <span>Remote Repo</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PIPELINE ===== -->
+  <section id="pipeline" class="pipeline-section">
+    <div class="container">
+      <div class="section-label">DevOps Workflow</div>
+      <h2 class="section-title">The <span class="gradient-text">Pipeline</span></h2>
+      <p class="section-desc">Every commit follows this path from your editor to production.</p>
+
+      <div class="pipeline">
+        <div class="pipeline-step" id="step-1">
+          <div class="step-num">01</div>
+          <div class="step-icon">✏️</div>
+          <h3>Write Code</h3>
+          <p>Build your HTML, CSS & JS files locally in your editor.</p>
+          <code>index.html</code>
+        </div>
+        <div class="pipeline-arrow">→</div>
+
+        <div class="pipeline-step" id="step-2">
+          <div class="step-num">02</div>
+          <div class="step-icon">🗂️</div>
+          <h3>Git Commit</h3>
+          <p>Stage and commit changes to track your progress.</p>
+          <code>git commit -m "..."</code>
+        </div>
+        <div class="pipeline-arrow">→</div>
+
+        <div class="pipeline-step" id="step-3">
+          <div class="step-num">03</div>
+          <div class="step-icon">☁️</div>
+          <h3>Push to GitHub</h3>
+          <p>Upload to remote repository for backup and sharing.</p>
+          <code>git push origin main</code>
+        </div>
+        <div class="pipeline-arrow">→</div>
+
+        <div class="pipeline-step" id="step-4">
+          <div class="step-num">04</div>
+          <div class="step-icon">🐳</div>
+          <h3>Docker Build</h3>
+          <p>Containerize the app using the Dockerfile and Nginx.</p>
+          <code>docker build -t app:v1 .</code>
+        </div>
+        <div class="pipeline-arrow">→</div>
+
+        <div class="pipeline-step" id="step-5">
+          <div class="step-num">05</div>
+          <div class="step-icon">📦</div>
+          <h3>Push to Hub</h3>
+          <p>Upload the image to Docker Hub registry.</p>
+          <code>docker push app:v1</code>
+        </div>
+        <div class="pipeline-arrow">→</div>
+
+        <div class="pipeline-step" id="step-6">
+          <div class="step-num">06</div>
+          <div class="step-icon">⎈</div>
+          <h3>Deploy to K8s</h3>
+          <p>Kubernetes pulls and runs 3 replicas of your app.</p>
+          <code>kubectl apply -f k8s/</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact" class="contact-section">
+    <div class="container">
+      <div class="section-label">Get In Touch</div>
+      <h2 class="section-title">Let's <span class="gradient-text">Connect</span></h2>
+      <p class="section-desc">Interested in this project or want to collaborate? Reach out!</p>
+
+      <div class="contact-form-wrapper">
+        <form class="contact-form" id="contact-form" onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" name="name" placeholder="John Doe" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" placeholder="john@example.com" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" placeholder="Capstone Project Inquiry" />
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" placeholder="Tell me about your thoughts on this project..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-wide" id="submit-btn">Send Message</button>
+          <div class="form-success" id="form-success">✅ Message sent! Thanks for reaching out.</div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="logo">
+        <span class="logo-bracket">&lt;</span>DevOps<span class="logo-accent">App</span><span class="logo-bracket">/&gt;</span>
+      </div>
+      <p class="footer-text">
+        Built with Git · GitHub · Docker · Kubernetes
+      </p>
+      <div class="footer-tags">
+        <span class="tag">Capstone Project</span>
+        <span class="tag">DevOps</span>
+        <span class="tag">Cloud Native</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

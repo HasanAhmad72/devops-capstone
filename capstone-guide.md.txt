@@ -1,0 +1,521 @@
+# 🚀 Capstone Project: DevOps Portfolio App
+### Deploy a Single-Page Web App Using Git · GitHub · Docker · Kubernetes
+
+---
+
+> **What You'll Build:** A beautiful personal portfolio/landing page, containerized with Docker, version-controlled with Git & GitHub, and deployed to a Kubernetes cluster.
+
+---
+
+## 📋 Table of Contents
+
+1. [Project Overview](#1-project-overview)
+2. [Prerequisites & Tools](#2-prerequisites--tools)
+3. [Project Structure](#3-project-structure)
+4. [Step 1 — Build the Web App](#step-1--build-the-web-app)
+5. [Step 2 — Git & GitHub Setup](#step-2--git--github-setup)
+6. [Step 3 — Dockerize the App](#step-3--dockerize-the-app)
+7. [Step 4 — Push Docker Image to Docker Hub](#step-4--push-docker-image-to-docker-hub)
+8. [Step 5 — Kubernetes Deployment](#step-5--kubernetes-deployment)
+9. [Step 6 — Verify & Access the App](#step-6--verify--access-the-app)
+10. [Architecture Diagram](#architecture-diagram)
+11. [Concepts Explained](#concepts-explained)
+12. [Troubleshooting](#troubleshooting)
+
+---
+
+## 1. Project Overview
+
+| Detail | Info |
+|--------|------|
+| **Project Name** | DevOps Portfolio Deployment |
+| **Type** | Single-Page Web Application |
+| **Tech Stack** | HTML, CSS, JavaScript |
+| **DevOps Tools** | Git, GitHub, Docker, Kubernetes |
+| **Goal** | Version control → Containerize → Deploy at scale |
+
+### What Each Tool Does in This Project
+
+```
+YOUR CODE
+   │
+   ▼
+[Git]          ← Tracks every change you make locally
+   │
+   ▼
+[GitHub]       ← Remote backup & collaboration hub
+   │
+   ▼
+[Docker]       ← Packages your app + its environment into a container
+   │
+   ▼
+[Kubernetes]   ← Runs, scales, and manages your containers in production
+```
+
+---
+
+## 2. Prerequisites & Tools
+
+### Install These First
+
+| Tool | Download Link | Verify Install |
+|------|--------------|----------------|
+| Git | https://git-scm.com/downloads | `git --version` |
+| Docker Desktop | https://www.docker.com/products/docker-desktop | `docker --version` |
+| kubectl | https://kubernetes.io/docs/tasks/tools/ | `kubectl version --client` |
+| Minikube (local K8s) | https://minikube.sigs.k8s.io/docs/start/ | `minikube version` |
+| VS Code (optional) | https://code.visualstudio.com/ | — |
+
+### Accounts Needed
+- ✅ [GitHub](https://github.com) — free account
+- ✅ [Docker Hub](https://hub.docker.com) — free account
+
+### Verify Everything Works
+Open a terminal and run:
+```bash
+git --version
+docker --version
+kubectl version --client
+minikube version
+```
+All four should print version numbers without errors.
+
+---
+
+## 3. Project Structure
+
+Your final project will look like this:
+```
+DevopsBullshit/
+├── index.html              ← The single-page web app
+├── style.css               ← Styling
+├── script.js               ← JavaScript interactions
+├── Dockerfile              ← Docker build instructions
+├── .dockerignore           ← Files Docker should ignore
+├── .gitignore              ← Files Git should ignore
+└── k8s/
+    ├── deployment.yaml     ← Kubernetes deployment config
+    └── service.yaml        ← Kubernetes service (networking)
+```
+
+---
+
+## Step 1 — Build the Web App
+
+> All project files are already created for you in the `DevopsBullshit/` folder. Review them to understand what we're deploying.
+
+### `index.html`
+The main HTML file — a single-page portfolio app with sections for Hero, About, Skills, and Contact.
+
+### `style.css`
+Modern glassmorphism design with dark mode, gradients, and animations.
+
+### `script.js`
+Smooth scrolling, animated counters, and interactive elements.
+
+**✅ Testing Locally:**
+Open `index.html` directly in your browser. You should see a beautiful dark-themed portfolio page.
+
+---
+
+## Step 2 — Git & GitHub Setup
+
+### 2.1 Initialize Git Repository
+
+Open a terminal in the project folder (`DevopsBullshit/`) and run:
+
+```bash
+# Initialize git
+git init
+
+# Check status — you'll see all untracked files
+git status
+```
+
+### 2.2 Make Your First Commit
+
+```bash
+# Stage all files
+git add .
+
+# Commit with a message
+git commit -m "feat: initial commit — portfolio web app"
+```
+
+### 2.3 Create GitHub Repository
+
+1. Go to [github.com](https://github.com) → Click **"New"** (green button)
+2. Repository name: `devops-capstone`
+3. Set to **Public** (important for portfolio visibility)
+4. Do **NOT** initialize with README (we already have files)
+5. Click **"Create Repository"**
+
+### 2.4 Push to GitHub
+
+GitHub will show you commands. Use these (replace `YOUR_USERNAME`):
+
+```bash
+# Link your local repo to GitHub
+git remote add origin https://github.com/YOUR_USERNAME/devops-capstone.git
+
+# Rename branch to main (modern standard)
+git branch -M main
+
+# Push your code to GitHub
+git push -u origin main
+```
+
+**✅ Verify:** Visit `https://github.com/YOUR_USERNAME/devops-capstone` — you should see your files.
+
+### 2.5 Git Best Practices for This Project
+
+Going forward, always follow this workflow:
+```bash
+# Check what changed
+git status
+
+# Stage specific files OR all files
+git add index.html          # specific file
+git add .                   # all files
+
+# Commit with meaningful message
+git commit -m "fix: update hero section text"
+
+# Push to GitHub
+git push
+```
+
+---
+
+## Step 3 — Dockerize the App
+
+### 3.1 Understand the Dockerfile
+
+The `Dockerfile` in your project:
+```dockerfile
+FROM nginx:alpine          # Use Nginx web server as base image
+COPY . /usr/share/nginx/html  # Copy our web files into the server
+EXPOSE 80                  # Tell Docker the app runs on port 80
+CMD ["nginx", "-g", "daemon off;"]  # Start the server
+```
+
+**Why Nginx?** It's a lightweight, production-grade web server — perfect for serving static HTML/CSS/JS files.
+
+### 3.2 Build the Docker Image
+
+```bash
+# Make sure Docker Desktop is running first!
+# Build the image (replace YOUR_DOCKERHUB_USERNAME)
+docker build -t YOUR_DOCKERHUB_USERNAME/devops-capstone:v1 .
+```
+
+You'll see Docker downloading the Nginx base image and copying your files.
+
+### 3.3 Test the Container Locally
+
+```bash
+# Run your container — map port 8080 on your machine to port 80 in container
+docker run -d -p 8080:80 --name capstone-app YOUR_DOCKERHUB_USERNAME/devops-capstone:v1
+```
+
+**✅ Verify:** Open http://localhost:8080 in your browser. You should see your portfolio!
+
+```bash
+# Stop the container when done testing
+docker stop capstone-app
+docker rm capstone-app
+```
+
+### 3.4 Useful Docker Commands
+
+```bash
+# List all running containers
+docker ps
+
+# List all images you have
+docker images
+
+# See container logs
+docker logs capstone-app
+
+# Remove an image
+docker rmi YOUR_DOCKERHUB_USERNAME/devops-capstone:v1
+```
+
+---
+
+## Step 4 — Push Docker Image to Docker Hub
+
+Docker Hub is like GitHub, but for Docker images.
+
+### 4.1 Login to Docker Hub
+
+```bash
+docker login
+# Enter your Docker Hub username and password when prompted
+```
+
+### 4.2 Push the Image
+
+```bash
+docker push YOUR_DOCKERHUB_USERNAME/devops-capstone:v1
+```
+
+**✅ Verify:** Go to https://hub.docker.com — you should see your `devops-capstone` repository with the `v1` tag.
+
+---
+
+## Step 5 — Kubernetes Deployment
+
+### 5.1 Start Minikube (Local Kubernetes Cluster)
+
+```bash
+# Start your local Kubernetes cluster
+minikube start
+
+# Verify the cluster is running
+kubectl cluster-info
+
+# See the single node in our cluster
+kubectl get nodes
+```
+
+You should see one node in `Ready` status.
+
+### 5.2 Understand the Kubernetes Files
+
+**`k8s/deployment.yaml`** — Tells Kubernetes WHAT to run:
+- Which Docker image to use
+- How many copies (replicas) to run
+- Resource limits (CPU & memory)
+
+**`k8s/service.yaml`** — Tells Kubernetes HOW to expose it:
+- Type `NodePort` makes the app accessible from outside the cluster
+- Maps an external port to the container's port 80
+
+### 5.3 Deploy to Kubernetes
+
+```bash
+# Apply the deployment (creates pods running your container)
+kubectl apply -f k8s/deployment.yaml
+
+# Apply the service (exposes your deployment)
+kubectl apply -f k8s/service.yaml
+```
+
+### 5.4 Watch the Deployment
+
+```bash
+# Watch pods being created (Ctrl+C to stop watching)
+kubectl get pods -w
+
+# You should see STATUS go:  Pending → ContainerCreating → Running
+```
+
+### 5.5 Check Everything is Running
+
+```bash
+# See your deployments
+kubectl get deployments
+
+# See your pods (should show 3 Running)
+kubectl get pods
+
+# See your services
+kubectl get services
+```
+
+Expected output:
+```
+NAME               READY   UP-TO-DATE   AVAILABLE
+capstone-deploy    3/3     3            3
+```
+
+---
+
+## Step 6 — Verify & Access the App
+
+### 6.1 Get the App URL
+
+Minikube provides a convenient command to open services:
+
+```bash
+# This opens the app directly in your browser!
+minikube service capstone-service
+
+# OR get the URL without opening:
+minikube service capstone-service --url
+```
+
+**✅ Your app is now running in Kubernetes!**
+
+### 6.2 Scale the Application
+
+One of Kubernetes' superpowers — scaling with one command:
+
+```bash
+# Scale up to 5 replicas
+kubectl scale deployment capstone-deploy --replicas=5
+
+# Check the new pods spinning up
+kubectl get pods
+
+# Scale back down
+kubectl scale deployment capstone-deploy --replicas=2
+```
+
+### 6.3 Rolling Update (Deploy New Version)
+
+When you update your app:
+
+```bash
+# 1. Build new image with new tag
+docker build -t YOUR_DOCKERHUB_USERNAME/devops-capstone:v2 .
+docker push YOUR_DOCKERHUB_USERNAME/devops-capstone:v2
+
+# 2. Update Kubernetes deployment (zero downtime!)
+kubectl set image deployment/capstone-deploy capstone=YOUR_DOCKERHUB_USERNAME/devops-capstone:v2
+
+# 3. Watch the rolling update
+kubectl rollout status deployment/capstone-deploy
+```
+
+### 6.4 Kubernetes Dashboard (Visual UI)
+
+```bash
+# Open the Kubernetes dashboard in your browser
+minikube dashboard
+```
+
+---
+
+## Architecture Diagram
+
+```
++---------------------------------------------------------+
+|                   DEVELOPER MACHINE                      |
+|                                                          |
+|  +----------+    git push    +------------------+       |
+|  |  VS Code | -------------> |     GitHub       |       |
+|  |  (code)  |                |  (remote repo)   |       |
+|  +----------+                +------------------+       |
+|       |                                                  |
+|       | docker build                                     |
+|       v                                                  |
+|  +----------+  docker push  +------------------+        |
+|  |  Docker  | ------------> |   Docker Hub     |        |
+|  |  Image   |               |  (image registry)|        |
+|  +----------+               +------------------+        |
+|                                      |                   |
++--------------------------------------+-------------------+
+                                       |  kubectl apply
+                                       v
+                          +----------------------------+
+                          |   KUBERNETES CLUSTER       |
+                          |                            |
+                          |  +----------------------+  |
+                          |  |    Deployment        |  |
+                          |  |  +-----+  +-----+   |  |
+                          |  |  | Pod |  | Pod |   |  |
+                          |  |  | [W] |  | [W] |   |  |
+                          |  |  +-----+  +-----+   |  |
+                          |  +----------------------+  |
+                          |  +----------------------+  |
+                          |  |    Service           |  |
+                          |  |  (NodePort:30080)    |  |
+                          |  +----------------------+  |
+                          +----------------------------+
+                                       |
+                                       v
+                              http://localhost:30080
+                              (Your live app!)
+```
+
+---
+
+## Concepts Explained
+
+### Git Concepts
+| Term | Meaning |
+|------|---------|
+| `repository` | Folder tracked by Git |
+| `commit` | A saved snapshot of your code |
+| `branch` | An independent line of development |
+| `remote` | A copy of the repo on another server (GitHub) |
+| `push` | Upload local commits to remote |
+| `pull` | Download remote changes locally |
+
+### Docker Concepts
+| Term | Meaning |
+|------|---------|
+| `Image` | Blueprint for a container (read-only) |
+| `Container` | A running instance of an image |
+| `Dockerfile` | Script to build an image |
+| `Registry` | Storage for images (Docker Hub) |
+| `Port mapping` | Connect host port to container port |
+
+### Kubernetes Concepts
+| Term | Meaning |
+|------|---------|
+| `Pod` | Smallest unit — wraps one or more containers |
+| `Deployment` | Manages pod replicas and updates |
+| `Service` | Networking layer to expose pods |
+| `Node` | A machine (virtual or physical) in the cluster |
+| `Replica` | A copy of a pod for high availability |
+| `kubectl` | CLI tool to interact with Kubernetes |
+
+---
+
+## Troubleshooting
+
+### ❌ `docker: command not found`
+→ Docker Desktop is not installed or not running. Start Docker Desktop first.
+
+### ❌ `minikube start` fails
+→ Enable virtualization in BIOS, or run: `minikube start --driver=docker`
+
+### ❌ Pods stuck in `ImagePullBackOff`
+→ Your Docker image name is wrong or wasn't pushed to Docker Hub.
+```bash
+kubectl describe pod <pod-name>  # See exact error
+```
+
+### ❌ `kubectl: command not found`
+→ kubectl not installed. Download from https://kubernetes.io/docs/tasks/tools/
+
+### ❌ App not accessible after `minikube service`
+→ Try: `minikube tunnel` in a separate terminal window
+
+### ❌ Port already in use
+```bash
+docker ps                    # Find conflicting container
+docker stop <container-id>   # Stop it
+```
+
+---
+
+## Submission Checklist
+
+- [ ] Web app runs locally in the browser (`index.html`)
+- [ ] Git repository initialized with meaningful commits
+- [ ] Code pushed to GitHub (public repository)
+- [ ] Docker image built successfully
+- [ ] Container runs locally on port 8080
+- [ ] Docker image pushed to Docker Hub
+- [ ] Kubernetes deployment created (3 replicas running)
+- [ ] Kubernetes service exposes the app
+- [ ] App accessible via `minikube service` URL
+- [ ] Scaled deployment demonstrated (kubectl scale)
+
+---
+
+## Additional Resources
+
+- Git Handbook: https://guides.github.com/introduction/git-handbook/
+- Docker Getting Started: https://docs.docker.com/get-started/
+- Kubernetes Basics: https://kubernetes.io/docs/tutorials/kubernetes-basics/
+- Nginx Documentation: https://nginx.org/en/docs/
+
+---
+
+*Capstone Project — DevOps Portfolio Deployment | Built with Git, GitHub, Docker, Kubernetes*

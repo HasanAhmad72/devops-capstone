@@ -1,0 +1,22 @@
+# Files Docker should NOT copy into the image
+# This keeps the image small and clean
+
+# Git files
+.git
+.gitignore
+
+# Kubernetes manifests (not needed inside container)
+k8s/
+
+# Documentation
+*.md
+capstone-guide.md
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+*.swp
+*.swo

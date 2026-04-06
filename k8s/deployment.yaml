@@ -1,0 +1,77 @@
+# ================================================
+# k8s/deployment.yaml
+# Kubernetes Deployment — DevOps Capstone
+# ================================================
+# This tells Kubernetes:
+#   - WHAT image to run (your Docker Hub image)
+#   - HOW MANY replicas (copies) to maintain
+#   - Resource limits for each container
+# ================================================
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: capstone-deploy
+  labels:
+    app: capstone
+    version: v1
+    project: devops-capstone
+
+spec:
+  # Run 3 copies of the container for high availability
+  replicas: 3
+
+  # This selector links the Deployment to its Pods
+  selector:
+    matchLabels:
+      app: capstone
+
+  # Rolling update strategy — zero downtime deployments
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1        # Allow 1 extra pod during update
+      maxUnavailable: 0  # Never go below 3 running pods
+
+  # Pod template — defines what each replica looks like
+  template:
+    metadata:
+      labels:
+        app: capstone
+        version: v1
+
+    spec:
+      containers:
+        - name: capstone
+          # ⚠️ IMPORTANT: Replace YOUR_DOCKERHUB_USERNAME below!
+          image: YOUR_DOCKERHUB_USERNAME/devops-capstone:v1
+          imagePullPolicy: Always
+
+          ports:
+            - containerPort: 80
+              protocol: TCP
+
+          # Resource limits — prevent one pod from hogging the node
+          resources:
+            requests:
+              memory: "32Mi"
+              cpu: "50m"
+            limits:
+              memory: "64Mi"
+              cpu: "100m"
+
+          # Health check — Kubernetes will restart unhealthy pods
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 15
+            failureThreshold: 3
+
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10

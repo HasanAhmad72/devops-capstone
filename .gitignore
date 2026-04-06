@@ -1,0 +1,22 @@
+# Files Git should NOT track
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node (if added later)
+node_modules/
+npm-debug.log
+
+# Environment files (keep secrets out of Git!)
+.env
+.env.local
+.env.*.local
