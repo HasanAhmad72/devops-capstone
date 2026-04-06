@@ -44,7 +44,7 @@ spec:
       containers:
         - name: capstone
           # ⚠️ IMPORTANT: Replace YOUR_DOCKERHUB_USERNAME below!
-          image: YOUR_DOCKERHUB_USERNAME/devops-capstone:v1
+          image: hasanahamd/devops-capstone:v1
           imagePullPolicy: Always
 
           ports:
