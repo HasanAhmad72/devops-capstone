@@ -239,6 +239,14 @@ body {
   letter-spacing: -2px;
   margin-bottom: 1.25rem;
 }
+.student-info {
+  margin-bottom: 2rem;
+  font-size: 1rem;
+  color: var(--text-secondary);
+  border-left: 2px solid var(--accent-blue);
+  padding-left: 1.25rem;
+}
+.student-info strong { color: var(--accent-cyan); }
 .gradient-text {
   background: var(--grad-1);
   -webkit-background-clip: text;

@@ -17,9 +17,9 @@ metadata:
     project: devops-capstone
 
 spec:
-  # NodePort: exposes the service on a port on each Node
-  # This is what allows `minikube service capstone-service` to work
-  type: NodePort
+  # LoadBalancer type works best with 'minikube tunnel' on Windows
+  # It automatically bridges the app to 127.0.0.1 (localhost)
+  type: LoadBalancer
 
   # The Service routes traffic to Pods with this label
   selector:
@@ -31,3 +31,4 @@ spec:
       port: 80          # Port the Service listens on (within cluster)
       targetPort: 80    # Port on the Pod/container to forward to
       nodePort: 30080   # External port on the Node (30000-32767 range)
+

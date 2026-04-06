@@ -290,7 +290,7 @@ You should see one node in `Ready` status.
 - Resource limits (CPU & memory)
 
 **`k8s/service.yaml`** — Tells Kubernetes HOW to expose it:
-- Type `NodePort` makes the app accessible from outside the cluster
+- Type `LoadBalancer` makes the app accessible on `localhost` (127.0.0.1)
 - Maps an external port to the container's port 80
 
 ### 5.3 Deploy to Kubernetes
@@ -311,6 +311,14 @@ kubectl get pods -w
 
 # You should see STATUS go:  Pending → ContainerCreating → Running
 ```
+
+### 5.5 Start the Window Bridge (CRITICAL FOR WINDOWS)
+
+Open a **separate** terminal window and run:
+```bash
+minikube tunnel
+```
+*Leave this window open! This is what bridges Kubernetes to your Windows browser.*
 
 ### 5.5 Check Everything is Running
 
@@ -519,3 +527,9 @@ docker stop <container-id>   # Stop it
 ---
 
 *Capstone Project — DevOps Portfolio Deployment | Built with Git, GitHub, Docker, Kubernetes*
+
+
+
+minikube start
+kubectl apply -f k8s/
+minikube service capstone-service
